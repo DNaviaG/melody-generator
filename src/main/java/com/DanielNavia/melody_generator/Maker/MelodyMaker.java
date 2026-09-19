@@ -1,16 +1,13 @@
 package com.DanielNavia.melody_generator.Maker;
 
 import com.DanielNavia.melody_generator.model.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 import java.util.*;
 import javax.sound.midi.*;
 import java.io.File;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@Component
+
 public class MelodyMaker {
 
     // ==================== CONFIGURACIÓN ====================

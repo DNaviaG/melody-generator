@@ -1,0 +1,278 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #08090d;
+  color: #f5f5f7;
+  color-scheme: dark;
+}
+
+.melody-page {
+  min-height: 100vh;
+  padding-bottom: 3rem;
+  background: radial-gradient(circle at top, #18162a, #08090d 40%);
+}
+
+.melody-page h1 {
+  color: #fff;
+}
+
+.melody-page .text-secondary {
+  color: #8f94a3 !important;
+}
+
+.melody-card {
+  width: 100%;
+  max-width: 780px;
+  background: #12141a !important;
+  color: #fff !important;
+  border: 1px solid #252936 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 20px 50px #0006 !important;
+}
+
+.melody-card .form-label {
+  color: #c9cdd6 !important;
+}
+
+.melody-card .form-select {
+  background: #0d0f14 !important;
+  color: #fff !important;
+  border: 1px solid #2a2e38 !important;
+  border-radius: 12px !important;
+}
+
+.melody-card .form-select:focus {
+  border-color: #756cff !important;
+  box-shadow: 0 0 0 3px #756cff22 !important;
+}
+
+.melody-card .btn {
+  border-radius: 999px !important;
+  font-weight: 600;
+}
+
+.melody-card .btn-primary {
+  background: #756cff !important;
+  border-color: #756cff !important;
+}
+
+.melody-card .btn-success {
+  background: #35d48b !important;
+  border-color: #35d48b !important;
+  color: #07140d !important;
+}
+
+.melody-card .btn-danger {
+  background: #24151a !important;
+  color: #ff7587 !important;
+}
+
+.melody-card .btn-warning {
+  background: #282013 !important;
+  color: #ffc95c !important;
+}
+
+.melody-card .btn-secondary {
+  background: #20232b !important;
+  color: #d0d3db !important;
+}
+
+.melody-card .form-range::-webkit-slider-runnable-track {
+  height: 5px;
+  background: #2a2e38;
+  border-radius: 999px;
+}
+
+.melody-card .form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -6px;
+  background: #7c76ff;
+  border: 3px solid #e2e3ff;
+  border-radius: 50%;
+}
+
+.melody-card hr {
+  border-color: #292d36;
+  opacity: 1;
+}
+
+/*
+ * Reservamos siempre el mismo espacio para la información
+ * de la melodía. Así la caja del reproductor no cambia
+ * de tamaño al generar o resetear.
+ */
+.melody-info {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.melody-card .badge {
+  background: #1b1e32 !important;
+  color: #b8b8ff !important;
+  border: 1px solid #34385b;
+  border-radius: 999px !important;
+}
+
+.piano-roll {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background: #0c0e13;
+  border: 1px solid #252936;
+  border-radius: 18px;
+}
+
+.piano-roll-row {
+  display: flex;
+  height: 28px;
+  border-bottom: 1px solid #191c24;
+}
+
+.piano-roll-label {
+  width: 48px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: #12151b;
+  border-right: 1px solid #292d36;
+  color: #9298a6;
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+.piano-roll-lane {
+  flex: 1;
+  min-width: 0;
+  background: #0e1116;
+}
+
+.piano-roll-row:nth-child(even) .piano-roll-lane {
+  background: #101319;
+}
+
+.piano-roll-overlay {
+  position: absolute;
+  inset: 0 0 0 48px;
+  pointer-events: none;
+}
+
+.piano-roll-note {
+  position: absolute;
+  height: 24px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #7355d6;
+  color: #fff;
+  border-radius: 6px;
+  font-size: .63rem;
+  font-weight: 700;
+}
+
+.piano-roll-note-active {
+  background: #35d48b !important;
+  color: #07140d !important;
+  box-shadow: 0 0 14px #35d48b55;
+}
+
+.piano-roll-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #ffffff22;
+}
+
+.melody-page > .container:last-child {
+  margin-top: 1.5rem;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+
+  .melody-page {
+    padding-top: 1.5rem !important;
+  }
+
+  .melody-page .text-center {
+    margin-bottom: 2rem !important;
+  }
+
+  .melody-page h1 {
+    font-size: 2rem;
+  }
+
+  .melody-card .card-body {
+    padding: 1.25rem !important;
+  }
+
+  .player-controls {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .player-controls .btn {
+    width: 100%;
+  }
+}
+
+/* Móvil */
+@media (max-width: 576px) {
+
+  .melody-page {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .melody-page > .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .melody-page h1 {
+    font-size: 1.75rem;
+  }
+
+  .melody-page .text-center p {
+    font-size: .9rem;
+  }
+
+  .melody-card {
+    border-radius: 16px !important;
+  }
+
+  .player-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .player-controls .btn {
+    width: 100%;
+  }
+
+  .melody-info {
+    min-height: 40px;
+  }
+
+  .melody-info .badge {
+    font-size: .85rem !important;
+  }
+
+  .piano-roll-label {
+    width: 42px;
+  }
+
+  .piano-roll-overlay {
+    left: 42px;
+  }
+
+  .piano-roll-note {
+    padding: 0 4px;
+    font-size: .55rem;
+  }
+}

@@ -1,0 +1,174 @@
+<div class="melody-page py-4">
+  <div class="container">
+
+    <!-- Título de la aplicación -->
+    <div class="text-center mb-5">
+      <h1 class="display-5 fw-bold mb-2">Melody Generator</h1>
+
+      <p class="text-secondary">
+        Genera una melodía aleatoria.
+      </p>
+    </div>
+
+    <div class="card melody-card mx-auto shadow-sm border-0">
+      <div class="card-body p-3 p-md-4">
+
+        <!-- Selector de escala -->
+        <div class="mb-4">
+          <label for="scaleSelect" class="form-label fw-semibold">
+            Escala
+          </label>
+
+          <select
+            id="scaleSelect"
+            class="form-select"
+            [value]="formatScaleValue(selectedScale())"
+            (change)="changeScale($any($event.target).value)"
+          >
+            <optgroup label="Mayores">
+              @for (note of noteNames; track note) {
+                <option [value]="note + '_MAJOR'">
+                  {{ formatNoteName(note) }} MAJOR
+                </option>
+              }
+            </optgroup>
+
+            <optgroup label="Menores">
+              @for (note of noteNames; track note) {
+                <option [value]="note + '_MINOR'">
+                  {{ formatNoteName(note) }} MINOR
+                </option>
+              }
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- Controles del reproductor -->
+        <div class="player-controls d-flex flex-wrap gap-2 mb-4">
+
+          <button
+            class="btn btn-primary px-4"
+            (click)="generateMelody()"
+          >
+            Generar melodía
+          </button>
+
+          <button
+            class="btn btn-success px-4"
+            (click)="playMelody()"
+            [disabled]="!melodyObject()"
+          >
+            ▶ Play
+          </button>
+
+          <button
+            class="btn btn-danger px-4"
+            (click)="stopMelody()"
+            [disabled]="!melodyObject()"
+          >
+            ⏹ Stop
+          </button>
+
+          <button
+            class="btn btn-warning px-4"
+            (click)="pauseMelody()"
+            [disabled]="!melodyObject() || !isPlaying()"
+          >
+            ⏸ Pause
+          </button>
+
+          <button
+            class="btn btn-secondary px-4"
+            (click)="resetMelody()"
+            [disabled]="!melodyObject()"
+          >
+            ↺ Reset
+          </button>
+
+        </div>
+
+        <!-- Control de tempo -->
+        <div class="mb-4">
+          <label for="tempo" class="form-label fw-semibold">
+            Tempo: {{ tempo() }} BPM
+          </label>
+
+          <input
+            id="tempo"
+            type="range"
+            class="form-range"
+            min="40"
+            max="240"
+            [value]="tempo()"
+            (input)="changeTempo(+$any($event.target).value)"
+          >
+        </div>
+
+        <hr class="mb-4">
+
+        <!-- Información de la melodía -->
+        <div class="melody-info">
+
+          @if (melodyObject(); as melody) {
+
+            <div class="d-flex align-items-center justify-content-between">
+              <span
+                class="badge bg-primary-subtle text-primary-emphasis fs-6 px-3 py-2"
+              >
+                {{ formatScaleName(melody.scale) }}
+              </span>
+
+              <span class="text-secondary small">
+                {{ melody.measures.length }} compases
+              </span>
+            </div>
+
+          }
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container">
+    <div class="piano-roll">
+      <div class="piano-roll-rows">
+        @for (noteName of pianoRollNotes; track noteName) {
+          <div class="piano-roll-row">
+            <div class="piano-roll-label">
+              {{ formatNoteName(noteName) }}
+            </div>
+
+            <div class="piano-roll-lane"></div>
+          </div>
+        }
+      </div>
+
+      <div class="piano-roll-overlay">
+
+        @for (divider of measureDividers(); track $index) {
+          <div
+            class="piano-roll-divider"
+            [style.left.%]="divider"
+          ></div>
+        }
+
+        @for (block of pianoRollBlocks(); track block.id) {
+          <div
+            class="piano-roll-note"
+            [class.piano-roll-note-active]="isCurrentNote(block.measureIndex, block.noteIndex)"
+            [style.top.px]="block.top"
+            [style.left.%]="block.left"
+            [style.width.%]="block.width"
+          >
+            {{ block.label }}
+          </div>
+        }
+
+      </div>
+    </div>
+  </div>
+
+</div>

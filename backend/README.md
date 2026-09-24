@@ -1,8 +1,8 @@
-# Melody Generator
+# Melody Generator - Backend
 
 API REST desarrollada con **Java 21 y Spring Boot** para la generación algorítmica de melodías a partir de una escala musical.
 
-El proyecto forma parte de una aplicación más amplia que, en futuras fases, contará con un frontend desarrollado con **Angular**, gestión de usuarios y persistencia de melodías.
+Este backend forma parte de la aplicación **Melody Generator**, junto con un frontend desarrollado con Angular.
 
 ## Descripción
 
@@ -16,7 +16,7 @@ Melody Generator genera melodías de forma algorítmica utilizando conceptos bá
 * Ritmo y duración de las notas.
 * Estructuración de las melodías en compases.
 
-Actualmente, el proyecto se centra en el desarrollo del **backend y de la lógica de generación musical**.
+La lógica de generación está separada de la capa HTTP para mantener una estructura sencilla y clara.
 
 ## Funcionalidades actuales
 
@@ -26,15 +26,13 @@ Actualmente, el proyecto se centra en el desarrollo del **backend y de la lógic
 * Generación de notas a partir de las escalas y acordes.
 * Generación de melodías estructuradas en compases.
 * API REST para solicitar la generación de melodías.
-* Validación de las peticiones recibidas.
-* Pruebas de los endpoints mediante Swagger UI.
+* Manejo de errores de la API.
 
 ## Tecnologías
 
 * **Java 21**
 * **Spring Boot**
 * **Spring Web MVC**
-* **Spring Validation**
 * **Maven**
 * **Lombok**
 * **Springdoc OpenAPI / Swagger UI**
@@ -43,159 +41,97 @@ Actualmente, el proyecto se centra en el desarrollo del **backend y de la lógic
 
 El backend está organizado en diferentes paquetes según la responsabilidad de cada componente:
 
-```text
+```
 src/
 └── main/
-    └── java/
-        └── com.DanielNavia.melody_generator/
-            ├── controller/
-            ├── dto/
-            ├── model/
-            └── Maker/
+    ├── java/
+    │   └── com.DanielNaviaG.melody_generator/
+    │       ├── controller/
+    │       ├── dto/
+    │       ├── exception/
+    │       ├── Maker/
+    │       ├── model/
+    │       ├── music/
+    │       └── service/
+    └── resources/
+        └── application.properties
 ```
 
 ### Principales componentes
 
-* **Controller**: recibe y gestiona las peticiones HTTP.
-* **DTO**: define los objetos utilizados para las peticiones y respuestas de la API.
+* **Controller**: recibe las peticiones HTTP y delega la generación al servicio.
+* **Service**: coordina el caso de uso de generación de melodías.
+* **Maker**: contiene la lógica principal encargada de generar la melodía.
+* **Music**: contiene la lógica relacionada con teoría musical y generación de compases.
 * **Model**: contiene las estructuras que representan los elementos musicales.
-* **Maker**: contiene la lógica encargada de generar las melodías.
+* **DTO**: contiene las estructuras específicas utilizadas por la API cuando son necesarias.
+* **Exception**: contiene el manejo de errores de la aplicación.
 
 ## API
 
 ### Generar una melodía
 
-```http
+```
 POST /api/v1/melody/generate
 ```
 
 Recibe una escala musical y genera una melodía basada en ella.
 
-#### Request
+### Request
 
-```json
+```
 {
-  "scale": "C_MAJOR"
+  "rootNote": "C",
+  "mode": "MAJOR"
 }
 ```
 
-#### Response
+Los modos disponibles actualmente son:
 
-La respuesta contiene la melodía generada, incluyendo la escala utilizada y sus diferentes compases y notas.
+* `MAJOR`
+* `MINOR`
+
+### Response
+
+La respuesta contiene la escala utilizada y los diferentes compases y notas de la melodía generada.
 
 Ejemplo simplificado:
 
-```json
+```
 {
-  "melody": {
-    "scale": "C_SHARP_MINOR",
-    "measures": [
-      {
-        "notes": [
-          {
-            "note": "G_SHARP",
-            "octave": 4,
-            "duration": "EIGHTH"
-          },
-          {
-            "note": "G_SHARP",
-            "octave": 4,
-            "duration": "EIGHTH"
-          },
-          {
-            "note": "F_SHARP",
-            "octave": 4,
-            "duration": "QUARTER"
-          },
-          {
-            "note": "E",
-            "octave": 4,
-            "duration": "QUARTER"
-          },
-          {
-            "note": "D_SHARP",
-            "octave": 4,
-            "duration": "QUARTER"
-          }
-        ]
-      },
-      {
-        "notes": [
-          {
-            "note": "A",
-            "octave": 4,
-            "duration": "QUARTER"
-          },
-          {
-            "note": "B",
-            "octave": 4,
-            "duration": "QUARTER"
-          },
-          {
-            "note": "E",
-            "octave": 4,
-            "duration": "HALF"
-          }
-        ]
-      },
-      {
-        "notes": [
-          {
-            "note": "A",
-            "octave": 4,
-            "duration": "EIGHTH"
-          },
-          {
-            "note": "C_SHARP",
-            "octave": 4,
-            "duration": "EIGHTH"
-          },
-          {
-            "note": "D_SHARP",
-            "octave": 4,
-            "duration": "QUARTER"
-          },
-          {
-            "note": "A",
-            "octave": 4,
-            "duration": "QUARTER"
-          },
-          {
-            "note": "G_SHARP",
-            "octave": 4,
-            "duration": "QUARTER"
-          }
-        ]
-      },
-      {
-        "notes": [
-          {
-            "note": "B",
-            "octave": 4,
-            "duration": "QUARTER"
-          },
-          {
-            "note": "A",
-            "octave": 4,
-            "duration": "QUARTER"
-          },
-          {
-            "note": "C_SHARP",
-            "octave": 4,
-            "duration": "HALF"
-          }
-        ]
-      }
-    ]
-  }
+  "scale": {
+    "rootNote": "C",
+    "mode": "MAJOR"
+  },
+  "measures": [
+    {
+      "notes": [
+        {
+          "note": "G",
+          "octave": 4,
+          "duration": "QUARTER"
+        },
+        {
+          "note": "E",
+          "octave": 4,
+          "duration": "QUARTER"
+        },
+        {
+          "note": "C",
+          "octave": 4,
+          "duration": "HALF"
+        }
+      ]
+    }
+  ]
 }
 ```
 
-## Pruebas de la API
+## Swagger UI
 
-El proyecto utiliza **Swagger UI** para probar los endpoints durante el desarrollo.
+La API puede probarse mediante **Swagger UI** cuando la aplicación está en ejecución.
 
-Desde Swagger UI se pueden enviar peticiones al backend y comprobar las respuestas directamente.
+Swagger permite consultar la documentación de los endpoints y realizar peticiones directamente contra la API.
 
 ## Ejecución
 
@@ -206,24 +142,24 @@ Desde Swagger UI se pueden enviar peticiones al backend y comprobar las respuest
 
 ### Ejecutar el proyecto
 
-El proyecto puede ejecutarse desde IntelliJ IDEA o mediante Maven.
+Desde la carpeta `backend`:
 
-Una vez iniciada la aplicación, la API queda disponible para realizar peticiones al endpoint de generación de melodías.
+```
+./mvnw spring-boot:run
+```
 
-## Próximas funcionalidades
+En Windows:
 
-El proyecto está planteado para evolucionar desde el generador actual hacia una aplicación completa de creación y gestión de melodías.
+```
+.\mvnw.cmd spring-boot:run
+```
 
-Entre las funcionalidades previstas se encuentran:
+También puede ejecutarse directamente desde IntelliJ IDEA.
 
-* Desarrollo del frontend con **Angular**.
-* Registro y gestión de usuarios.
-* Autenticación de usuarios.
-* Gestión de peticiones de generación de melodías.
-* Guardado de melodías.
-* Carga de melodías guardadas.
-* Edición de melodías.
-* Persistencia mediante una base de datos.
-* Descarga de melodías en formato MIDI.
+Una vez iniciada la aplicación, la API estará disponible para recibir peticiones de generación de melodías.
 
-Estas funcionalidades se incorporarán progresivamente a medida que avance el desarrollo del proyecto.
+## Estado del proyecto
+
+Esta versión corresponde a la **V1** del backend.
+
+El proyecto está planteado para evolucionar progresivamente con nuevas funcionalidades, como persistencia de melodías, usuarios, autenticación y exportación a formatos como MIDI.

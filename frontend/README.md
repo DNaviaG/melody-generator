@@ -1,59 +1,104 @@
-# Prueba
+Melody Generator - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.24.
+Aplicación web desarrollada con Angular 21 para generar, visualizar y reproducir melodías musicales.
 
-## Development server
+Este frontend forma parte de la aplicación Melody Generator y se comunica con el backend mediante una API REST.
 
-To start a local development server, run:
+Descripción
 
-```bash
+La aplicación permite seleccionar una escala musical y solicitar al backend la generación de una melodía.
+
+La melodía generada se muestra mediante un piano roll y puede reproducirse directamente desde la aplicación.
+
+Funcionalidades actuales
+Selección de escalas mayores y menores.
+Generación de melodías mediante la API REST.
+Visualización de las notas mediante un piano roll.
+Reproducción de melodías mediante Tone.js.
+Controles de reproducción.
+Control de tempo.
+Indicador de la nota que se está reproduciendo.
+Pausa y reanudación de la reproducción.
+Detención de la reproducción.
+Reinicio de la melodía.
+Diseño responsive para diferentes tamaños de pantalla.
+Tecnologías
+Angular 21
+TypeScript
+HTML
+CSS
+Bootstrap
+Tone.js
+Estructura del proyecto
+
+El frontend está organizado por funcionalidades:
+
+src/
+└── app/
+    ├── melody/
+    ├── melody-player-service/
+    ├── melody-service/
+    ├── piano-roll-service/
+    └── models/
+Principales componentes
+Melody: componente principal de la interfaz de generación y reproducción.
+MelodyService: gestiona la comunicación con la API REST del backend.
+MelodyPlayerService: gestiona la reproducción de las melodías mediante Tone.js.
+PianoRollService: prepara la información necesaria para representar las notas en el piano roll.
+Models: contiene las interfaces utilizadas para representar las melodías, escalas, compases y notas.
+Comunicación con el backend
+
+El frontend realiza peticiones HTTP al backend para generar nuevas melodías.
+
+Endpoint utilizado:
+
+POST /api/v1/melody/generate
+
+Ejemplo de petición:
+
+{
+  "rootNote": "C",
+  "mode": "MAJOR"
+}
+
+La respuesta contiene la escala y los compases de la melodía generada.
+
+Ejecución
+Requisitos
+Node.js
+npm
+Angular CLI
+Instalar dependencias
+
+Desde la carpeta frontend:
+
+npm install
+Ejecutar el proyecto
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Una vez iniciado el servidor de desarrollo, la aplicación estará disponible en:
 
-## Code scaffolding
+http://localhost:4200
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+La aplicación se recargará automáticamente al modificar los archivos del proyecto.
 
-```bash
-ng generate component component-name
-```
+Construcción
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Para generar una versión de producción:
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
 ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Los archivos generados se almacenarán en el directorio dist/.
 
-## Running unit tests
+Pruebas
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+El proyecto incluye los tests generados por Angular y utiliza Vitest como framework de pruebas.
 
-```bash
+Para ejecutar los tests:
+
 ng test
-```
+Estado del proyecto
 
-## Running end-to-end tests
+Esta versión corresponde a la V1 del frontend.
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+El frontend está integrado con el backend y permite completar el flujo principal de la aplicación: seleccionar una escala, generar una melodía, visualizarla y reproducirla.

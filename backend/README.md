@@ -163,3 +163,18 @@ Una vez iniciada la aplicación, la API estará disponible para recibir peticion
 Esta versión corresponde a la **V1** del backend.
 
 El proyecto está planteado para evolucionar progresivamente con nuevas funcionalidades, como persistencia de melodías, usuarios, autenticación y exportación a formatos como MIDI.
+
+## Tests
+
+El backend incluye tests unitarios y de integración para comprobar el funcionamiento de la lógica de generación de melodías y de la API REST.
+
+Para ejecutar todos los tests desde la raíz del repositorio:
+
+    .\backend\mvnw.cmd -f backend\pom.xml clean test
+
+Actualmente hay 22 tests automatizados.
+
+El resultado esperado es:
+
+    Tests run: 22, Failures: 0, Errors: 0, Skipped: 0
+    BUILD SUCCESS
